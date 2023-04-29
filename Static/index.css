@@ -7,14 +7,14 @@ body {
     margin-right: auto;
 }
 
-main {  
-    
+main {     
     background-color: white;   
     font-family: Verdana, Geneva, Tahoma, sans-serif;    
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row-reverse;
     justify-content: space-between;
-    padding: 15px;
+    padding: 15px;    
 }
 
 header{
@@ -25,5 +25,43 @@ header{
 }
 header img{
     max-width: 150px;
+}
+#raspberryPi img{
+    width: 320px;
+}
+
+table {
+    padding: 5px;
+    border: 2px solid white;
+    background-color: rgb(233, 235, 235);
+    text-align: center;
+    border-radius: 5px;
+}
+table{
+    width: 320px;    
+}
+
+#memory .value, #disk .value {
+    text-align: right;    
+}
+table td, table th{
+    padding: 5px;
+}
+#actions{
+    width: 630px;
+    min-width: 320px;
+    position: relative;
+}
+.shutdown{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 980px;
+    min-width: 320px;
+    padding: 10px;
+
+    
+    
+    
 }
 

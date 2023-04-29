@@ -14,29 +14,81 @@
         <img src="../Static/images/headergif.gif" alt="Logo" id="headerGif">
     </header>
     <main>
-        <div>
+        <div id="raspberryPi">
             <h3>Raspberry Pi Monitor</h3>
-            <p>Current GPU temperature is {}</p>
+            <img src="../Static/images/raspbery_pi_gif.webp" alt="Raspgif">
+            <table id="CPU">
+                <tbody>
+                    <tr>
+                        <th colspan="2">CPU stats</th>
+                    </tr>
+                    <tr>
+                        <td id="utilization">CPU Utilization</td>
+                        <td class="value">VALUE</td>
+                    </tr>
+                    <tr>
+                        <td id="frequency">CPU Frequency</td>
+                        <td class="value">VALUE</td>
+                    </tr>
+                    <tr >
+                        <td id="temperature">Temperature</td>
+                        <td class="value">VALUE</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="memory">
+                <tbody>
+                    <tr>
+                        <th colspan="2">Memory Stats</th>
+                    </tr>
+                    <tr>
+                        <td>Total Memory</td>
+                        <td>Memory Used</td>
+                    </tr>
+                    <tr>
+                        <td class="value">VALUE</td>
+                        <td class="value">VALUE</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="disk">
+                <tbody>
+                    <tr>
+                        <th colspan="2"> Disk Stats</th>
+                    </tr>
+                    <tr>
+                        <td>Total Disk Space</td>
+                        <td>Disk Used</td>
+                    </tr>
+                    <tr>
+                        <td class="value">VALUE</td>
+                        <td class="value">VALUE</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div id="actions">
-            <form action="/" method="POST">
-               <p>Turn Light :</p>
-               <input type="submit" name="submit" value="On">
-               <input type="submit" name="submit" value="Off">
-               <br><br>
-               <p>Water the plant :</p>
-               <input type="submit" name="submit" value="On">
-               <input type="submit" name="submit" value="Off">
-               <br><br>
-               <p>Turn Fan :</p>
-               <input type="submit" name="submit" value="On">
-               <input type="submit" name="submit" value="Off">
-               <br><br>
-               <p>Shut Down :</p>
-               <input  type="submit" name="submit" value="ShutDown" >
+            <form action="/" method="POST">               
+                   Turn Light :
+                   <input type="submit" name="submit" value="On">
+                   <input type="submit" name="submit" value="Off">
+                   <br><br>
+                   Water the plant :
+                   <input type="submit" name="submit" value="On">
+                   <input type="submit" name="submit" value="Off">
+                   <br><br>
+                   Turn Fan :
+                   <input type="submit" name="submit" value="On">
+                   <input type="submit" name="submit" value="Off">
+                   <br><br>
             </form>
         </div>
+        <div class="shutdown">                   
+            <input type="submit" name="submit" value="Shut down" >
+        </div>
     </main>
-
+    <footer>
+        <h6>&copy; &nbsp;&nbsp; Copyright Leonardo dos Santos Nunes</h6> 
+    </footer>
 </body>
 </html>
