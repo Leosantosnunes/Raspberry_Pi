@@ -4,29 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebServer</title>
+    <title>Indoor Farm Management</title>
     <link rel="stylesheet" href="../Static/index.css">
+    <script src="../Static/script.js" defer></script>
 </head>
 <body>
-<div>
-    <h1>Welcome to my Raspberry Pi</h1>
-    <p>Current GPU temperature is {}</p>
-    <form action="/" method="POST">
-       <p>Turn Light :</p>
-       <input type="submit" name="submit" value="On">
-       <input type="submit" name="submit" value="Off">
-       <br><br>
-       <p>Water the plant :</p>
-       <input type="submit" name="submit" value="On">
-       <input type="submit" name="submit" value="Off">
-       <br><br>
-       <p>Turn Fan :</p>
-       <input type="submit" name="submit" value="On">
-       <input type="submit" name="submit" value="Off">
-       <br><br>
-       <p style="text-align: center;">Shut Down :</p>
-       <input  type="submit" name="submit" value="Shut Down" >
-    </form>
-</div>
+    <header>
+        <h1>Welcome to my indoor farmer management</h1>
+        <img src="../Static/images/headergif.gif" alt="Logo" id="headerGif">
+    </header>
+    <main>
+        <div>
+            <h3>Raspberry Pi Monitor</h3>
+            <p>Current GPU temperature is {}</p>
+        </div>
+        <div id="actions">
+            <form action="/" method="POST">
+               <p>Turn Light :</p>
+               <input type="submit" name="submit" value="On">
+               <input type="submit" name="submit" value="Off">
+               <br><br>
+               <p>Water the plant :</p>
+               <input type="submit" name="submit" value="On">
+               <input type="submit" name="submit" value="Off">
+               <br><br>
+               <p>Turn Fan :</p>
+               <input type="submit" name="submit" value="On">
+               <input type="submit" name="submit" value="Off">
+               <br><br>
+               <p>Shut Down :</p>
+               <input  type="submit" name="submit" value="ShutDown" >
+            </form>
+        </div>
+    </main>
+
 </body>
 </html>
