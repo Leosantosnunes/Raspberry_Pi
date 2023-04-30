@@ -2,13 +2,13 @@
 
 from flask import Flask, render_template, Response
 import datetime
-import os
-import RPi.GPIO as GPIO
+import os   
+import gpiozero
 import psutil 
 
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(11,GPIO.OUT)
+
+light = gpiozero.LED(11)
 
 
 app=Flask(__name__)
@@ -18,30 +18,43 @@ def index():
     now=datetime.datetime.now()
     timeString=now.strftime("%Y-%m-%d %H:%M")    
     memory = psutil.virtual_memory()
-    temperature = psutil.sensors_temperatures()['cpu-thermal'][0].current
+    temperature = gpiozero.CPUTemperature()
     disk = psutil.disk_usage('/')
     templateData={
         'title':'Indoor Farm Management - RaspBerry Pi 3 A+',
         'time':timeString,        
         'cpu_percent': psutil.cpu_percent(1),        
         'cpu_freq': psutil.cpu_freq(),
-        'cpu_mem_total': memory.total,        
-        'cpu_mem_used': memory.used,        
-        'disk_usage_total': disk.total,
-        'disk_usage_used': disk.used,  
+        'cpu_mem_total': (memory.total / 100000),        
+        'cpu_mem_used': (memory.used / 100000),        
+        'disk_usage_total': (disk.total / 100000000),
+        'disk_usage_used': (disk.used / 100000000),  
         'sensor_temperatures': temperature        
     }    
     return render_template('index.html',**templateData)
 
-@app.route('/<actionid>') 
+@app.route('/<actionid>')
+##routine of lights ##
+def routine(actionid):
+    while actionid == False:        
+        now = datetime.datetime.now().time()
+        ##GPIO.output(11,GPIO.LOW)
+        if now.hour >= 7 and now.hour <= 22: 
+            return light.on()
+        
+        else :   
+            return light.off()
+## manual manipulation of the system
 def handleRequest(actionid):
     print("Button pressed : {}".format(actionid))
     if actionid == 'LightOn':
-        return GPIO.output(11,GPIO.HIGH)
+        return light.on()
     elif actionid == 'LightOff':
-        return GPIO.output(11,GPIO.LOW)
+        return light.off()
     elif actionid == 'shutdownbtn':
         return os.system("shutdown now -h")
+    elif actionid == 'routine':
+        return routine()
 
 
                               

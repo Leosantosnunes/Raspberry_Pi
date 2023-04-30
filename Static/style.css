@@ -18,10 +18,13 @@ main {
 }
 
 header{
-    background-image: radial-gradient(white,rgb(53, 242, 53));    
+    background-color: #78f4b5;    
     display: flex;
     align-items: center; 
     justify-content: space-around;      
+}
+header h1{
+    background-image: radial-gradient(rgba(255, 255, 255, 0.582),#78f4b5)
 }
 header img{
     max-width: 150px;
