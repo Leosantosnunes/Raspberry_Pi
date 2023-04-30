@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indoor Farm Management</title>
-    <link rel="stylesheet" href="../Static/index.css">
-    <script src="../Static/script.js" defer></script>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="../static/script.js" defer></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -24,15 +25,15 @@
                     </tr>
                     <tr>
                         <td id="utilization">CPU Utilization</td>
-                        <td class="value">VALUE</td>
+                        <td class="value">{{cpu_percent}}</td>
                     </tr>
                     <tr>
                         <td id="frequency">CPU Frequency</td>
-                        <td class="value">VALUE</td>
+                        <td class="value">{{cpu_freq}}</td>
                     </tr>
                     <tr >
                         <td id="temperature">Temperature</td>
-                        <td class="value">VALUE</td>
+                        <td class="value">{{sensor_temperatures}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -46,8 +47,8 @@
                         <td>Memory Used</td>
                     </tr>
                     <tr>
-                        <td class="value">VALUE</td>
-                        <td class="value">VALUE</td>
+                        <td class="value">{{cpu_mem_total}}</td>
+                        <td class="value">{{cpu_mem_used}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -61,34 +62,35 @@
                         <td>Disk Used</td>
                     </tr>
                     <tr>
-                        <td class="value">VALUE</td>
-                        <td class="value">VALUE</td>
+                        <td class="value">{{disk_usage_total}}</td>
+                        <td class="value">{{disk_usage_used}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div id="actions">
-            <form action="/" method="POST">               
-                   Turn Light :
-                   <input type="submit" name="submit" value="On">
-                   <input type="submit" name="submit" value="Off">
-                   <br><br>
-                   Water the plant :
-                   <input type="submit" name="submit" value="On">
-                   <input type="submit" name="submit" value="Off">
-                   <br><br>
-                   Turn Fan :
-                   <input type="submit" name="submit" value="On">
-                   <input type="submit" name="submit" value="Off">
-                   <br><br>
-            </form>
+            
+            Turn Light :
+            
+            <button id='LightOn'>On</button>
+            <button id='LightOff'>Off</button>            
+            <br><br>
+            Water the plant :
+            <input type="submit" name="submit" value="On">
+            <input type="submit" name="submit" value="Off">
+            <br><br>
+            Turn Fan :
+            <input type="submit" name="submit" value="On">
+            <input type="submit" name="submit" value="Off">
+            <br><br>
+            
         </div>
-        <div class="shutdown">                   
-            <input type="submit" name="submit" value="Shut down" >
+        <div id="shutdown">                   
+            <button id='shutdownbtn'>Shut down</button>
         </div>
     </main>
     <footer>
         <h6>&copy; &nbsp;&nbsp; Copyright Leonardo dos Santos Nunes</h6> 
     </footer>
 </body>
-</html>
+</html>    
