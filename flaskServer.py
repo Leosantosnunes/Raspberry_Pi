@@ -24,11 +24,11 @@ def index():
         'title':'Indoor Farm Management - RaspBerry Pi 3 A+',
         'time':timeString,        
         'cpu_percent': psutil.cpu_percent(1),        
-        'cpu_freq': psutil.cpu_freq(),
-        'cpu_mem_total': (memory.total / 100000),        
-        'cpu_mem_used': (memory.used / 100000),        
-        'disk_usage_total': (disk.total / 100000000),
-        'disk_usage_used': (disk.used / 100000000),  
+        'cpu_freq': psutil.cpu_freq().current,
+        'cpu_mem_total': (memory.total / 1000000),        
+        'cpu_mem_used': (memory.used / 1000000),        
+        'disk_usage_total': (disk.total / 1000000000),
+        'disk_usage_used': (disk.used / 1000000000),  
         'sensor_temperatures': temperature        
     }    
     return render_template('index.html',**templateData)
@@ -37,11 +37,9 @@ def index():
 ##routine of lights ##
 def routine(actionid):
     while actionid == False:        
-        now = datetime.datetime.now().time()
-        ##GPIO.output(11,GPIO.LOW)
+        now = datetime.datetime.now().time()        
         if now.hour >= 7 and now.hour <= 22: 
-            return light.on()
-        
+            return light.on()        
         else :   
             return light.off()
 ## manual manipulation of the system
@@ -54,7 +52,7 @@ def handleRequest(actionid):
     elif actionid == 'shutdownbtn':
         return os.system("shutdown now -h")
     elif actionid == 'routine':
-        return routine()
+        return routine(actionid)
 
 
                               
