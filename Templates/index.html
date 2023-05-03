@@ -25,15 +25,15 @@
                     </tr>
                     <tr>
                         <td id="utilization">CPU Utilization</td>
-                        <td class="value">{{cpu_percent}}</td>
+                        <td class="value">{{cpu_percent}}%</td>
                     </tr>
                     <tr>
                         <td id="frequency">CPU Frequency</td>
-                        <td class="value">{{cpu_freq}}</td>
+                        <td class="value">{{cpu_freq}}Hz</td>
                     </tr>
                     <tr >
                         <td id="temperature">Temperature</td>
-                        <td class="value">{{sensor_temperatures}}</td>
+                        <td class="value">{{sensor_temperatures}}°C</td>
                     </tr>
                 </tbody>
             </table>
@@ -47,8 +47,8 @@
                         <td>Memory Used</td>
                     </tr>
                     <tr>
-                        <td class="value">{{cpu_mem_total}}</td>
-                        <td class="value">{{cpu_mem_used}}</td>
+                        <td class="value">{{cpu_mem_total}}mb</td>
+                        <td class="value">{{cpu_mem_used}}mb</td>
                     </tr>
                 </tbody>
             </table>
@@ -62,25 +62,30 @@
                         <td>Disk Used</td>
                     </tr>
                     <tr>
-                        <td class="value">{{disk_usage_total}}</td>
-                        <td class="value">{{disk_usage_used}}</td>
+                        <td class="value">{{disk_usage_total}}GB</td>
+                        <td class="value">{{disk_usage_used}}GB</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <div id="actions">
-            Keep Routine:
-            <button id='routine'>Routine</button>
+            Set Routine: <br>                   
+            <input type="time" id="TurnOnTime" name="TurnOnTime" value="07:00" placeholder="07:00">
+            <input type="time" id="TurnOffTime" name="TurnOffTime" value="23:00">            
             <br><br>
-            Turn Light:            
+            Turn Routine: <br>          
+            <button id='RoutineOn'>On</button>
+            <button id='RoutineOff'>Off</button>            
+            <br><br>
+            Turn Light: <br>          
             <button id='LightOn'>On</button>
             <button id='LightOff'>Off</button>            
             <br><br>
-            Water Plant:
+            Water Plant: <br>
             <button id='PlantOn'>On</button>
             <button id='PlantOff'>Off</button>
             <br><br>
-            Turn Fan:
+            Turn Fan: <br>
             <button id='FanOn'>On</button>
             <button id='FanOff'>Off</button>
             <br><br>

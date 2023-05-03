@@ -8,7 +8,7 @@ import psutil
 
 
 
-light = gpiozero.LED(11)
+light = gpiozero.LED(17)
 
 
 app=Flask(__name__)
@@ -18,30 +18,22 @@ def index():
     now=datetime.datetime.now()
     timeString=now.strftime("%Y-%m-%d %H:%M")    
     memory = psutil.virtual_memory()
-    temperature = gpiozero.CPUTemperature()
+    temperature = gpiozero.CPUTemperature().temperature
     disk = psutil.disk_usage('/')
     templateData={
         'title':'Indoor Farm Management - RaspBerry Pi 3 A+',
         'time':timeString,        
         'cpu_percent': psutil.cpu_percent(1),        
-        'cpu_freq': psutil.cpu_freq().current,
-        'cpu_mem_total': (memory.total / 1000000),        
-        'cpu_mem_used': (memory.used / 1000000),        
-        'disk_usage_total': (disk.total / 1000000000),
-        'disk_usage_used': (disk.used / 1000000000),  
-        'sensor_temperatures': temperature        
+        'cpu_freq': round(psutil.cpu_freq().current),
+        'cpu_mem_total': round((memory.total / 1000000)),        
+        'cpu_mem_used': round((memory.used / 1000000)),        
+        'disk_usage_total': round((disk.total / 1000000000)),
+        'disk_usage_used': round((disk.used / 1000000000)),  
+        'sensor_temperatures': round(temperature)        
     }    
     return render_template('index.html',**templateData)
 
 @app.route('/<actionid>')
-##routine of lights ##
-def routine(actionid):
-    while actionid == False:        
-        now = datetime.datetime.now().time()        
-        if now.hour >= 7 and now.hour <= 22: 
-            return light.on()        
-        else :   
-            return light.off()
 ## manual manipulation of the system
 def handleRequest(actionid):
     print("Button pressed : {}".format(actionid))
@@ -49,10 +41,25 @@ def handleRequest(actionid):
         return light.on()
     elif actionid == 'LightOff':
         return light.off()
+    elif actionid == 'RoutineOn':
+             while True:        
+                now = datetime.datetime.now().time()        
+                if now.hour >= 7  and now.hour <= 23: 
+                    return light.on()        
+                else :   
+                    return light.off()
     elif actionid == 'shutdownbtn':
-        return os.system("shutdown now -h")
-    elif actionid == 'routine':
-        return routine(actionid)
+        return os.system("shutdown now -h") 
+
+##routine of lights ##
+# def routine(actionid):
+#     while actionid == 'RoutineOff':        
+#         now = datetime.datetime.now().time()        
+#         if now.hour >= 7 and now.hour <= 23: 
+#             return light.on()        
+#         else :   
+#             return light.off()
+
 
 
                               

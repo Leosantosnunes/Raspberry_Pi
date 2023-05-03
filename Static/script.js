@@ -22,18 +22,13 @@ document.getElementById('actions').addEventListener('click', function(event) {
       return false;
 
     }
-
-  });
-
-  document.getElementById('shutdown').addEventListener('click', function(event) {
-
-    if (event.target.nodeName == "BUTTON") {
-
+    else if (event.target.nodeName == "input"){
       var tar = event.target.id;
+      var val = event.target.value;
 
       console.log(tar);
 
-      $.getJSON('/'+tar,
+      $.getJSON('/'+tar+'?id='+tar+'&value='+val,
 
           function(data) {
 
@@ -44,5 +39,26 @@ document.getElementById('actions').addEventListener('click', function(event) {
       return false;
 
     }
-
   });
+
+  // document.getElementById('shutdown').addEventListener('click', function(event) {
+
+  //   if (event.target.nodeName == "BUTTON") {
+
+  //     var tar = event.target.id;
+
+  //     console.log(tar);
+
+  //     $.getJSON('/'+tar,
+
+  //         function(data) {
+
+  //       //do nothing
+
+  //     });
+
+  //     return false;
+
+  //   }
+
+  // });
