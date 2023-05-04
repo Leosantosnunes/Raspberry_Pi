@@ -35,19 +35,24 @@ def index():
 
 @app.route('/<actionid>')
 ## manual manipulation of the system
-def handleRequest(actionid):
-    print("Button pressed : {}".format(actionid))
+def handleRequest(actionid):    
     if actionid == 'LightOn':
-        return light.on()
+        light.on()
+        return "OK 200" 
     elif actionid == 'LightOff':
-        return light.off()
+        light.off()
+        return "OK 200"
+        
+                   
     elif actionid == 'RoutineOn':
              while True:        
                 now = datetime.datetime.now().time()        
                 if now.hour >= 7  and now.hour <= 23: 
-                    return light.on()        
-                else :   
-                    return light.off()
+                    light.on()
+                    return "OK 200" 
+                else :
+                    light.off()
+                    return "OK 200"
     elif actionid == 'shutdownbtn':
         return os.system("shutdown now -h") 
 
