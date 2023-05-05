@@ -1,81 +1,29 @@
-let lightOn = document.getElementById("LightOn");
-let lightOff = document.getElementById("LightOff");
-
 // Event Listener
 
 document.getElementById('actions').addEventListener('click', function(event) {
 
-    if (event.target.nodeName == "BUTTON") {
-
-      var tar = event.target.id;
-    
-    
-      console.log(tar);
-    
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', '/'+tar);
-      xhr.onload = function() {
-        if (xhr.status === 200) {
-          var data = JSON.parse(xhr.responseText);
-          // handle response data here
+  if (event.target.nodeName == "BUTTON") {
+    var actionid = event.target.id;
+    var timeON = document.getElementById("TurnOnTime").value;
+    var timeOFF = document.getElementById("TurnOffTime").value;
+  
+    console.log(actionid, timeON,timeOFF);
+  
+    fetch('/'+actionid+'?id='+actionid+'&timeON='+timeON+'&timeOFF='+timeOFF)
+      .then(function(response) {
+        if (response.ok) {
+          return response.json();
         }
-      };
-      xhr.send();
-    
-      return false;
-
-      // var tar = event.target.id;
-
-      // console.log(tar);
-
-      // $.getJSON('/'+tar,
-
-      //     function(data) {
-
-      //   //do nothing
-
-      // });
-
-      // return false;
-
-    }
-    else if (event.target.nodeName == "input"){
-      var tar = event.target.id;
-      var val = event.target.value;
-
-      console.log(tar);
-
-      $.getJSON('/'+tar+'?id='+tar+'&value='+val,
-
-          function(data) {
-
-        //do nothing
-
+        throw new Error('Network response was not ok.');
+      })
+      .then(function(data) {
+        // handle response data here
+      })
+      .catch(function(error) {
+        console.log('Fetch error:', error);
       });
-
-      return false;
-
-    }
-  });
-
-  // document.getElementById('shutdown').addEventListener('click', function(event) {
-
-  //   if (event.target.nodeName == "BUTTON") {
-
-  //     var tar = event.target.id;
-
-  //     console.log(tar);
-
-  //     $.getJSON('/'+tar,
-
-  //         function(data) {
-
-  //       //do nothing
-
-  //     });
-
-  //     return false;
-
-  //   }
-
-  // });
+  
+    return false;
+  }
+  
+    });

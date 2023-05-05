@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template, Response
-import datetime
+from flask import Flask, render_template, request
+from datetime import datetime
 import os   
 import gpiozero
 import psutil 
@@ -9,20 +9,17 @@ import psutil
 
 
 light = gpiozero.LED(17)
+now = datetime.now().time().strftime("%H:%M") 
 
 
 app=Flask(__name__)
     
 @app.route('/')
-def index():    
-    now=datetime.datetime.now()
-    timeString=now.strftime("%Y-%m-%d %H:%M")    
+def index():            
     memory = psutil.virtual_memory()
     temperature = gpiozero.CPUTemperature().temperature
     disk = psutil.disk_usage('/')
-    templateData={
-        'title':'Indoor Farm Management - RaspBerry Pi 3 A+',
-        'time':timeString,        
+    templateData={                        
         'cpu_percent': psutil.cpu_percent(1),        
         'cpu_freq': round(psutil.cpu_freq().current),
         'cpu_mem_total': round((memory.total / 1000000)),        
@@ -35,38 +32,29 @@ def index():
 
 @app.route('/<actionid>')
 ## manual manipulation of the system
-def handleRequest(actionid):    
+def handleRequest(actionid):
+    timeON = datetime.strptime(request.args.get('timeON'),"%H:%M").strftime("%H:%M")
+    timeOFF = datetime.strptime(request.args.get('timeOFF'),"%H:%M").strftime("%H:%M")    
+   
     if actionid == 'LightOn':
         light.on()
         return "OK 200" 
     elif actionid == 'LightOff':
         light.off()
-        return "OK 200"
-        
-                   
-    elif actionid == 'RoutineOn':
-             while True:        
-                now = datetime.datetime.now().time()        
-                if now.hour >= 7  and now.hour <= 23: 
-                    light.on()
-                    return "OK 200" 
-                else :
-                    light.off()
-                    return "OK 200"
+        return "OK 200"                   
+    elif actionid == 'RoutineOn' or actionid == 'RoutineOff':
+        print(now)
+        print(timeON)
+        print(timeOFF)
+        while True:                      
+            if now >= timeON  and now <= timeOFF: 
+                light.on()
+                return "OK 200"
+            else :
+                light.off()
+                return "OK 200"
     elif actionid == 'shutdownbtn':
         return os.system("shutdown now -h") 
-
-##routine of lights ##
-# def routine(actionid):
-#     while actionid == 'RoutineOff':        
-#         now = datetime.datetime.now().time()        
-#         if now.hour >= 7 and now.hour <= 23: 
-#             return light.on()        
-#         else :   
-#             return light.off()
-
-
-
                               
 if __name__=='__main__':    
     app.run(debug=True, port=5000, host='0.0.0.0',threaded=True)
