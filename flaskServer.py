@@ -4,12 +4,13 @@ from flask import Flask, render_template, request
 from datetime import datetime
 import os   
 import gpiozero
-import psutil 
+import psutil
+import time
 
 
 
 light = gpiozero.LED(17)
-now = datetime.now().time().strftime("%H:%M") 
+
 
 
 app=Flask(__name__)
@@ -33,6 +34,7 @@ def index():
 @app.route('/<actionid>')
 ## manual manipulation of the system
 def handleRequest(actionid):
+    global lighton     
     timeON = datetime.strptime(request.args.get('timeON'),"%H:%M").strftime("%H:%M")
     timeOFF = datetime.strptime(request.args.get('timeOFF'),"%H:%M").strftime("%H:%M")    
    
@@ -40,19 +42,23 @@ def handleRequest(actionid):
         light.on()
         return "OK 200" 
     elif actionid == 'LightOff':
+        lighton = False
         light.off()
         return "OK 200"                   
     elif actionid == 'RoutineOn' or actionid == 'RoutineOff':
-        print(now)
-        print(timeON)
-        print(timeOFF)
-        while True:                      
-            if now >= timeON  and now <= timeOFF: 
-                light.on()
-                return "OK 200"
-            else :
-                light.off()
-                return "OK 200"
+        if actionid == 'RoutineOn':
+            lighton = True
+            while lighton:
+                now = datetime.now().strftime("%H:%M")
+                if now >= timeON  and now <= timeOFF: 
+                    light.on()                    
+                else :
+                    light.off()                    
+                time.sleep(5)
+        elif actionid  == 'RoutineOff':
+            light.off()
+            lighton = False
+            return "OK 200"                
     elif actionid == 'shutdownbtn':
         return os.system("shutdown now -h") 
                               
