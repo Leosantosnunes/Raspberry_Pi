@@ -42,7 +42,7 @@ def handleRequest(actionid):
         light.on()
         return "OK 200" 
     elif actionid == 'LightOff':
-        lighton = False
+        lighton = False 
         light.off()
         return "OK 200"                   
     elif actionid == 'RoutineOn' or actionid == 'RoutineOff':
