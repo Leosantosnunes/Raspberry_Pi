@@ -16,14 +16,55 @@
         <img src="../static/images/indoorfarmerlogo.png" alt="Logo" id="headerGif">
     </header>
     <main>
+        <div id="farm_board">
+            <table id="table_board">
+                <thead>
+                    <tr>
+                        <th colspan="5"> Farm Board</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Routine</td>
+                        <td>ON</td>
+                        <td><span class="circle" id="RoutineOnGreenLight"></span></td>
+                        <td>OFF</td>
+                        <td><span class="circle Off" id="RoutineOffRedLight"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Light</td>
+                        <td>ON</td>
+                        <td><span class="circle" id="LightOnGreenLight"></span></td>
+                        <td>OFF</td>
+                        <td><span class="Off circle" id="LightOffRedLight"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Water Pump</td>
+                        <td>ON</td>
+                        <td><span class="circle" id="WaterOnGreenLight"></span></td>
+                        <td>OFF</td>
+                        <td><span class="Off circle" id="WaterOffRedLight"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Fan</td>
+                        <td>ON</td>
+                        <td><span class="circle" id="FanOnGreenLight"></span></td>
+                        <td>OFF</td>
+                        <td><span class="Off circle" id="FanOffRedLight"></span></td>
+                    </tr>
+                </tbody>
+            </table>           
+        </div>
         <div id="raspberryPi">
-            <h3>Raspberry Pi Monitor</h3>
+            <p id="Monitor">Raspberry Pi Monitor</p>
             <img src="../static/images/raspberry_pi.png" alt="Raspgif">
             <table id="CPU">
-                <tbody>
+                <thead>
                     <tr>
                         <th colspan="2">CPU stats</th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr>
                         <td id="utilization">CPU Utilization</td>
                         <td class="value">{{cpu_percent}}%</td>
@@ -39,10 +80,12 @@
                 </tbody>
             </table>
             <table id="memory">
-                <tbody>
+                <thead>
                     <tr>
                         <th colspan="2">Memory Stats</th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr>
                         <td>Total Memory</td>
                         <td>Memory Used</td>
@@ -54,10 +97,12 @@
                 </tbody>
             </table>
             <table id="disk">
-                <tbody>
+                <thead>
                     <tr>
                         <th colspan="2"> Disk Stats</th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr>
                         <td>Total Disk Space</td>
                         <td>Disk Used</td>
@@ -70,6 +115,7 @@
             </table>
         </div>
         <div id="actions">
+            <p id="Actions">Actions</p>
             Set Routine: <br>                   
             <input type="time" id="TurnOnTime" name="TurnOnTime" value="07:00" placeholder="07:00">
             <input type="time" id="TurnOffTime" name="TurnOffTime" value="23:00">            
@@ -83,8 +129,8 @@
             <button id='LightOff'>Off</button>            
             <br><br>
             Water Plant: <br>
-            <button id='PlantOn'>On</button>
-            <button id='PlantOff'>Off</button>
+            <button id='WaterOn'>On</button>
+            <button id='WaterOff'>Off</button>
             <br><br>
             Turn Fan: <br>
             <button id='FanOn'>On</button>

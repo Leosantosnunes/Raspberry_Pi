@@ -31,7 +31,7 @@ def index():
     }    
     return render_template('index.html',**templateData)
 
-@app.route('/<actionid>')
+@app.route('/<actionid>',methods = ['POST'])
 ## manual manipulation of the system
 def handleRequest(actionid):
     global lighton     
