@@ -7,10 +7,8 @@ import gpiozero
 import psutil
 import time
 
-
-
 light = gpiozero.LED(17)
-
+lighton = False  
 
 
 app=Flask(__name__)
@@ -61,6 +59,15 @@ def handleRequest(actionid):
             return "OK 200"                
     elif actionid == 'shutdownbtn':
         return os.system("shutdown now -h") 
+    
+@app.route('/<farmboard>')
+def farm_board(farmboard):
+    global lighton
+    board_response = {
+        "RoutineOn": lighton,
+        "LightOn": light.is_lit
+    }
+    return board_response
                               
 if __name__=='__main__':    
     app.run(debug=True, port=5000, host='0.0.0.0',threaded=True)
