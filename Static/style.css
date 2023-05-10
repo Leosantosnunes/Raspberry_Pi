@@ -37,13 +37,17 @@ header img{
 #farm_board{
     width: 950px;
     padding-left: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 15px;    
 }
 
 #farm_board #table_board th, #Monitor, #Actions{
     font-size: 30px;
     text-align: center;
     font-weight: bold;
+}
+#table_board{
+    margin: auto;
+    width: 600px;
 }
 .circle {
     height: 25px;
@@ -92,6 +96,8 @@ table td, table th{
     min-width: 320px;
     position: relative;
     font-size: 1.5em;
+    margin: auto;
+    margin-top: 0px;
 }
 #shutdown{
     text-align: center;
