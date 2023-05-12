@@ -68,6 +68,17 @@ def farm_board(farmboard):
         "LightOn": light.is_lit
     }
     return board_response
+
+@app.route('/<RPiactionid>',methods = ['POST'])
+## manual manipulation of the system
+def handleRequest(RPiactionid):        
+   
+    if RPiactionid == 'rebootbtn':
+        os.system('reboot now')
+        return 'OK 200'         
+    elif RPiactionid == 'shutdownbtn':
+        os.system("shutdown now -h") 
+        return 'ok 200' 
                               
 if __name__=='__main__':    
     app.run(debug=True, port=5000, host='0.0.0.0',threaded=True)
