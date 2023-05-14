@@ -69,12 +69,12 @@ def farm_board(farmboard):
     }
     return board_response
 
-@app.route('/<RPiactionid>',methods = ['POST'])
+@app.route('/rpi-action/<RPiactionid>',methods = ['POST'])
 ## manual manipulation of the system
-def handleRequest(RPiactionid):        
+def handleRequestRPi(RPiactionid):        
    
     if RPiactionid == 'rebootbtn':
-        os.system('reboot now')
+        os.system("reboot now")
         return 'OK 200'         
     elif RPiactionid == 'shutdownbtn':
         os.system("shutdown now -h") 

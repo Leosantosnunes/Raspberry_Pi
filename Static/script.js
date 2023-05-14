@@ -111,8 +111,10 @@ raspPibtn.addEventListener('click', function(event) {
 
     console.log(RPiactionid);    
     
-    var url= '/'+RPiactionid;
+    var url= '/rpi-action/'+RPiactionid;
+    
     SendRequest(RPiactionid,url);    
   }
   
 });
+
