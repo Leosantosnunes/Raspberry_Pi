@@ -2,12 +2,14 @@
 
 from flask import Flask, render_template, request
 from datetime import datetime
-import os   
-import gpiozero
+from os import system  
+from gpiozero import LED,DigitalInputDevice,CPUTemperature
 import psutil
-import time
+from time import sleep
 
-light = gpiozero.LED(17)
+light = LED(17)
+moisture = DigitalInputDevice(10,pull_up=True)
+
 lighton = False  
 
 
@@ -16,7 +18,7 @@ app=Flask(__name__)
 @app.route('/')
 def index():            
     memory = psutil.virtual_memory()
-    temperature = gpiozero.CPUTemperature().temperature
+    temperature = CPUTemperature().temperature
     disk = psutil.disk_usage('/')
     templateData={                        
         'cpu_percent': psutil.cpu_percent(1),        
@@ -52,20 +54,20 @@ def handleRequest(actionid):
                     light.on()                    
                 else :
                     light.off()                    
-                time.sleep(5)
+                sleep(5)
         elif actionid  == 'RoutineOff':
             light.off()
             lighton = False
-            return "OK 200"                
-    elif actionid == 'shutdownbtn':
-        return os.system("shutdown now -h") 
+            return "OK 200"               
+
     
 @app.route('/<farmboard>')
 def farm_board(farmboard):
     global lighton
     board_response = {
         "RoutineOn": lighton,
-        "LightOn": light.is_lit
+        "LightOn": light.is_lit,
+        "MoistureOn": moisture.is_active
     }
     return board_response
 
@@ -74,10 +76,10 @@ def farm_board(farmboard):
 def handleRequestRPi(RPiactionid):        
    
     if RPiactionid == 'rebootbtn':
-        os.system("reboot now")
+        system("reboot now -h")
         return 'OK 200'         
     elif RPiactionid == 'shutdownbtn':
-        os.system("shutdown now -h") 
+        system("shutdown now -h") 
         return 'ok 200' 
                               
 if __name__=='__main__':    

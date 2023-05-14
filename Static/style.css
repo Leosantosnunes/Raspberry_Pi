@@ -15,7 +15,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row-reverse;
-    justify-content: space-between;
+    justify-content: center;
     padding: 15px;    
 }
 
