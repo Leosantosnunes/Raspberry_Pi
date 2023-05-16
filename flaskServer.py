@@ -6,9 +6,11 @@ from os import system
 from gpiozero import LED,DigitalInputDevice,CPUTemperature
 import psutil
 from time import sleep
+import Adafruit_DHT as dht
 
 light = LED(17)
 moisture = DigitalInputDevice(10,pull_up=True)
+TentHumidity,TentTemperature = dht.read_retry(dht.DHT22,4)
 
 lighton = False  
 
@@ -67,7 +69,9 @@ def farm_board(farmboard):
     board_response = {
         "RoutineOn": lighton,
         "LightOn": light.is_lit,
-        "MoistureOn": moisture.is_active
+        "MoistureOn": moisture.is_active,
+        "TentTemperature":TentTemperature,
+        "TentHumidity":TentHumidity
     }
     return board_response
 

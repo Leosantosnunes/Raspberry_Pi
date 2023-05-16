@@ -70,7 +70,13 @@ function FarmBoardWindow(actionid){
           GreenLight(i,FarmId);
         }
       }
-    }    
+    }
+    else if(value == "TentTemperature"){
+      document.getElementById("TentTemperature").innerHTML = (actionid[value]).toFixed(2)+"°C";
+    } 
+    else if(value == "TentHumidity"){
+      document.getElementById("TentHumidity").innerHTML = (actionid[value]).toFixed(2)+"%";
+    }   
   }
 }
 
