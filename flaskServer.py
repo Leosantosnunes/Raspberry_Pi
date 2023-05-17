@@ -10,7 +10,7 @@ import Adafruit_DHT as dht
 
 light = LED(17)
 moisture = DigitalInputDevice(10,pull_up=True)
-TentHumidity,TentTemperature = dht.read_retry(dht.DHT22,4)
+
 
 lighton = False  
 
@@ -66,6 +66,7 @@ def handleRequest(actionid):
 @app.route('/<farmboard>')
 def farm_board(farmboard):
     global lighton
+    TentHumidity,TentTemperature = dht.read_retry(dht.DHT22,4)
     board_response = {
         "RoutineOn": lighton,
         "LightOn": light.is_lit,
