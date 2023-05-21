@@ -7,12 +7,36 @@ from gpiozero import LED,DigitalInputDevice,CPUTemperature
 import psutil
 from time import sleep
 import Adafruit_DHT as dht
+import plotly.express as px
+import pandas as pd
 
 light = LED(17)
+lighton = False 
 moisture = DigitalInputDevice(10,pull_up=True)
+TentHumidity,TentTemperature = dht.read_retry(dht.DHT22,4)
+tentInfoDF = pd.DataFrame(columns=['time', 'temperature', 'humidity'])
 
+def tentInfoDataFrame ():       
+    global TentHumidity, TentTemperature,tentInfoDF
+      
+    while True:
+        new_row = {'time': datetime.now(), 'temperature': TentTemperature, 'humidity': TentHumidity}
+        tentInfoDF = tentInfoDF.append(new_row, ignore_index=True) 
+        sleep(600)    
 
-lighton = False  
+tentInfoDataFrame()
+
+fig = px.line(tentInfoDF, x='time', y='humidity')
+graph_html = fig.to_html(full_html=False)
+
+with open('path_to_existing_html_file.html', 'r') as file:
+    html_content = file.read()
+
+updated_html_content = html_content.replace('<!--GRAPH_PLACEHOLDER-->', graph_html)
+
+with open('path_to_existing_html_file.html', 'w') as file:
+    file.write(updated_html_content)
+ 
 
 
 app=Flask(__name__)
@@ -65,8 +89,7 @@ def handleRequest(actionid):
     
 @app.route('/<farmboard>')
 def farm_board(farmboard):
-    global lighton
-    TentHumidity,TentTemperature = dht.read_retry(dht.DHT22,4)
+    global lighton, TentHumidity, TentTemperature    
     board_response = {
         "RoutineOn": lighton,
         "LightOn": light.is_lit,
