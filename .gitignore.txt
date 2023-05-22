@@ -1,0 +1,11 @@
+# Ignore Visual Studio Code settings folder
+.vscode
+
+# Ignore the htmlserver.py file
+htmlserver.py
+
+# Ignore the index.html file
+index.html
+
+# Ignore the relayProj.py file
+relayProj.py
