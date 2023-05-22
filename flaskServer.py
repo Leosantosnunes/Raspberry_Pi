@@ -9,6 +9,7 @@ from time import sleep
 import Adafruit_DHT as dht
 import plotly.express as px
 import pandas as pd
+import threading
 
 light = LED(17)
 lighton = False 
@@ -21,22 +22,27 @@ def tentInfoDataFrame ():
       
     while True:
         new_row = {'time': datetime.now(), 'temperature': TentTemperature, 'humidity': TentHumidity}
-        tentInfoDF = tentInfoDF.append(new_row, ignore_index=True) 
-        sleep(600)    
+        tentInfoDF.loc[len(tentInfoDF)] = new_row 
+        tentInfoDF.head(5)
+        displayTentInfo()
+        sleep(600)
+        
 
-tentInfoDataFrame()
+def displayTentInfo():    
+    global tentInfoDF
+    fig = px.line(tentInfoDF, x='time', y='humidity')
+    graph_html = fig.to_html(full_html=False)
 
-fig = px.line(tentInfoDF, x='time', y='humidity')
-graph_html = fig.to_html(full_html=False)
+    with open('/templates/index.html', 'r') as file:
+        html_content = file.read()
 
-with open('path_to_existing_html_file.html', 'r') as file:
-    html_content = file.read()
+    updated_html_content = html_content.replace('<!--GRAPH_PLACEHOLDER-->', graph_html)
 
-updated_html_content = html_content.replace('<!--GRAPH_PLACEHOLDER-->', graph_html)
+    with open('/templates/index.html', 'w') as file:
+        file.write(updated_html_content)
 
-with open('path_to_existing_html_file.html', 'w') as file:
-    file.write(updated_html_content)
- 
+tent_info_thread = threading.Thread(target=tentInfoDataFrame)
+tent_info_thread.start()
 
 
 app=Flask(__name__)
