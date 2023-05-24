@@ -1,21 +1,15 @@
-import RPi.GPIO as GPIO
-import datetime
-import time
+import pandas as pd
 
-GPIO.setmode(GPIO.BOARD)
+##tentInfoDF = pd.DataFrame(columns=['time', 'temperature', 'humidity'])
+tentInfoDF = pd.read_csv('C:\\Users\\leona\\Desktop\\Raspberry Projects\\IndoorFarmManagement\\tentInfoDF.csv')
 
-GPIO.setup(11,GPIO.OUT)
 
-try:
-    while True:        
-        now = datetime.datetime.now().time()
-        ##GPIO.output(11,GPIO.LOW)
-        if now.hour >= 7 and now.hour <= 22: 
-            GPIO.output(11,GPIO.HIGH)
-        
-        else :   
-            GPIO.output(11,GPIO.LOW)
-                
-finally:
-    GPIO.cleanup()
+new_row = {'time': 5, 'temperature': 6, 'humidity':7}
+##tentInfoDF.loc[len(tentInfoDF)] = new_row 
+tentInfoDF = tentInfoDF.drop(index=1)
+
+
+tentInfoDF.to_csv('C:\\Users\\leona\\Desktop\\Raspberry Projects\\IndoorFarmManagement\\tentInfoDF.csv', index=False)
+
+print(tentInfoDF.head(5))
         

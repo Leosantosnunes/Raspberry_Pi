@@ -5,4 +5,4 @@ from gpiozero import LED
 class Light:
 
     light = LED(17)
-    lighton = False
+    lightOn = False
