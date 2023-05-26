@@ -6,7 +6,7 @@ tentInfoDF = pd.read_csv('C:\\Users\\leona\\Desktop\\Raspberry Projects\\IndoorF
 
 new_row = {'time': 5, 'temperature': 6, 'humidity':7}
 ##tentInfoDF.loc[len(tentInfoDF)] = new_row 
-tentInfoDF = tentInfoDF.drop(index=1)
+tentInfoDF = tentInfoDF.drop(index=0)
 
 
 tentInfoDF.to_csv('C:\\Users\\leona\\Desktop\\Raspberry Projects\\IndoorFarmManagement\\tentInfoDF.csv', index=False)

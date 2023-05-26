@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
-from flask import Flask, render_template
+from flask import Flask, render_template,request
 import threading
-from sensor import Sensor
-import rPiHardware
+from sensor import Sensor, Dht22
+from rPiHardware import RPihardware
+from datetime import datetime
 
 
-tent_info_thread = threading.Thread(target=Sensor.tentInfoDataFrame)
+dht22_instance = Dht22()  # Create an instance of the Dht22 class
+tent_info_thread = threading.Thread(target=dht22_instance.tentInfoDataFrame)
 tent_info_thread.start()
 
 
@@ -14,23 +16,26 @@ app=Flask(__name__)
     
 @app.route('/')
 def index():    
-    Sensor.templateData    
-    return render_template('index.html',**Sensor.templateData)
+    RPihardware.templateData    
+    return render_template('index.html',**RPihardware.templateData)
 
 @app.route('/<actionid>',methods = ['POST'])
 ## manual manipulation of the system
-def handleRequest(actionid):            
-    Sensor.actionRequest(Sensor.lighton,Sensor.timeON,Sensor.timeOFF,Sensor.now,actionid)
+def handleRequest(actionid):
+    timeON = datetime.strptime(request.args.get('timeON'),"%H:%M").strftime("%H:%M")
+    timeOFF = datetime.strptime(request.args.get('timeOFF'),"%H:%M").strftime("%H:%M")           
+    return Sensor.actionRequest(timeON,timeOFF,Sensor.now,actionid)
     
 @app.route('/<farmboard>')
 def handleRequest2(farmboard):
-    Sensor.farmBoard()
+    return Sensor.farmBoard()
 
 
 @app.route('/rpi-action/<RPiactionid>',methods = ['POST'])
 ## manual manipulation of the system
-def handleRequestRPi(RPiactionid):        
-   rPiHardware.RPihardware(RPiactionid)
+def handleRequestRPi(RPiactionid):
+    print(RPiactionid)       
+    return RPihardware.RequestRPi(RPiactionid)
                               
 if __name__=='__main__':    
     app.run(debug=True, port=5000, host='0.0.0.0',threaded=True)

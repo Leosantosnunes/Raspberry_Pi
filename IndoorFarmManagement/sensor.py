@@ -5,15 +5,14 @@ from dht22 import Dht22
 from moisture import Moisture
 from datetime import datetime
 from time import sleep
-from flask import request
 
 class Sensor(Light,Dht22,Moisture):
 
     now = datetime.now().strftime("%H:%M")
-    timeON = datetime.strptime(request.args.get('timeON'),"%H:%M").strftime("%H:%M")
-    timeOFF = datetime.strptime(request.args.get('timeOFF'),"%H:%M").strftime("%H:%M")
+    Light.lightOn
+    
 
-    def actionRequest(lightOn,timeON,timeOFF,now,actionid):
+    def actionRequest(timeON,timeOFF,now,actionid):
         if actionid == 'LightOn':
             Light.light.on()
             return "OK 200" 
