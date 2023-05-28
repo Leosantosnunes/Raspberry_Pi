@@ -8,8 +8,7 @@ import pandas as pd
 
 class Dht22:
 
-    ##attributes to read the temperature and humidity in the tent.
-    tentHumidity,tentTemperature = dht.read_retry(dht.DHT22,4)    
+    ##attributes to read the temperature and humidity in the tent.       
     tentInfoDF = pd.read_csv('/home/leonardo/Desktop/shared/tentInfoDF.csv')
 
     
@@ -18,7 +17,9 @@ class Dht22:
     def tentInfoDataFrame(self):        
         while True:
             
-            now = datetime.now()            
+            now = datetime.now()  
+            self.tentTemperature
+            self.tentHumidity,self.tentTemperature = dht.read_retry(dht.DHT22,4) 
             new_row = {'time': now, 'temperature': self.tentTemperature, 'humidity': self.tentHumidity}
             self.tentInfoDF.loc[len(self.tentInfoDF)] = new_row 
             self.tentInfoDF.tail(5) 

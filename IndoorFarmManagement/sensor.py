@@ -17,12 +17,12 @@ class Sensor(Light,Dht22,Moisture):
             Light.light.on()
             return "OK 200" 
         elif actionid == 'LightOff':
-            lighton = False 
+            Light.lightOn = False 
             Light.light.off()
             return "OK 200"                   
         elif actionid == 'RoutineOn' or actionid == 'RoutineOff':
             if actionid == 'RoutineOn':
-                lighton = True
+                Light.lighton = True
                 while lighton:                    
                     if now >= timeON  and now <= timeOFF: 
                         Light.light.on()                    

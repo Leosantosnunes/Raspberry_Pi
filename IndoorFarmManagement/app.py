@@ -9,7 +9,7 @@ from datetime import datetime
 
 dht22_instance = Dht22()  # Create an instance of the Dht22 class
 tent_info_thread = threading.Thread(target=dht22_instance.tentInfoDataFrame)
-tent_info_thread.start()
+tent_info_thread.start() 
 
 
 app=Flask(__name__)
